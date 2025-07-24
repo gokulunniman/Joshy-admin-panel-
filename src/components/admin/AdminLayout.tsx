@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -8,7 +8,9 @@ import {
   MessageSquare, 
   Settings, 
   Users,
-  LogOut
+  LogOut,
+  Menu,
+  X
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -50,6 +52,7 @@ const navigationItems = [
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // TODO: Implement Supabase session check to guard admin routes
   const handleLogout = () => {
@@ -61,16 +64,46 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     return location.pathname === href;
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Mobile menu button */}
+      <div className="sm:hidden fixed top-4 left-4 z-50">
+        <Button
+          onClick={toggleMobileMenu}
+          className="bg-white shadow-md hover:bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          size="icon"
+          aria-label="Toggle mobile menu"
+        >
+          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </Button>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 h-screen bg-muted border-r border-border p-4 fixed left-0 top-0 overflow-y-auto">
-        <div className="mb-8">
-          <h1 className="text-xl font-bold text-foreground">Admin Panel</h1>
-          <p className="text-sm text-muted-foreground">Tourism CMS</p>
+      <div className={`w-64 h-screen bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 z-40 transform transition-transform duration-300 ease-in-out ${
+        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+      } sm:translate-x-0`}>
+        {/* Sidebar Header */}
+        <div className="h-16 flex items-center justify-center border-b border-gray-200 px-4">
+          <div className="text-center">
+            <h1 className="text-lg font-bold text-gray-800">Admin Panel</h1>
+            <p className="text-xs text-gray-600">Tourism CMS</p>
+          </div>
         </div>
         
-        <nav className="space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           {navigationItems.map((item) => {
             const Icon = item.icon;
             const isActive = isActiveRoute(item.href);
@@ -79,11 +112,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center gap-3 px-4 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 }`}
+                aria-label={`Navigate to ${item.name}`}
               >
                 <Icon className="h-4 w-4" />
                 {item.name}
@@ -92,34 +127,40 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           })}
         </nav>
 
-        <div className="absolute bottom-4 left-4 right-4">
+        {/* Sidebar Footer */}
+        <div className="px-4 pb-4">
           <Button
-            variant="outline"
             onClick={handleLogout}
-            className="w-full flex items-center gap-2"
+            className="w-full flex items-center gap-2 mt-auto text-sm text-red-600 hover:bg-red-50 bg-transparent border-0 shadow-none focus:outline-none focus:ring-2 focus:ring-red-500"
+            aria-label="Sign out"
           >
             <LogOut className="h-4 w-4" />
-            Logout
+            Sign Out
           </Button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 ml-64">
-        <header className="h-16 border-b border-border bg-background px-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-foreground">
+      <div className="flex-1 sm:ml-64">
+        <header className="h-16 border-b border-gray-200 bg-white px-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <h2 className="text-lg font-semibold text-gray-800">
               {navigationItems.find(item => isActiveRoute(item.href))?.name || "Admin Panel"}
             </h2>
           </div>
           <div className="flex items-center gap-2">
-            <Link to="/" target="_blank" className="text-sm text-muted-foreground hover:text-primary">
+            <Link 
+              to="/" 
+              target="_blank" 
+              className="text-sm text-gray-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-2 py-1"
+              aria-label="View website in new tab"
+            >
               View Website
             </Link>
           </div>
         </header>
         
-        <main className="p-6">
+        <main className="p-6 bg-gray-50 overflow-auto min-h-[calc(100vh-4rem)]">
           {children}
         </main>
       </div>
