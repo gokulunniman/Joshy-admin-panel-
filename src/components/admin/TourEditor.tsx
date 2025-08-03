@@ -6,9 +6,12 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ImageUploader from "./ImageUploader";
+import SlideshowManager from "./SlideshowManager";
 import ItineraryManager from "./ItineraryManager";
 import InclusionsManager from "./InclusionsManager";
+import RichTextEditor from "./RichTextEditor";
+import MapEditor from "./MapEditor";
+import DestinationsMultiSelect from "./DestinationsMultiSelect";
 
 interface TourEditorProps {
   tourId?: string;
@@ -29,7 +32,10 @@ export default function TourEditor({ tourId }: TourEditorProps) {
   // TODO: Submit to createTour()/updateTour() API
 
   const handleSave = () => {
-    // TODO: Implement form submission
+    // TODO: Implement form submission with updateTour() API
+    // TODO: Validate all required fields including destinations and route points
+    // TODO: Handle slideshow images upload and ordering
+    // TODO: Save rich text content with proper sanitization
     console.log("Save tour", tourId ? "update" : "create");
   };
 
@@ -77,12 +83,9 @@ export default function TourEditor({ tourId }: TourEditorProps) {
 
               <div className="space-y-2">
                 <Label htmlFor="content">Detailed Content</Label>
-                {/* TODO: Replace with rich text editor */}
-                <div className="border rounded-md p-4 bg-muted/50">
-                  <p className="text-sm text-muted-foreground">
-                    Rich text editor placeholder - TODO: Implement with editor component
-                  </p>
-                </div>
+                <RichTextEditor 
+                  placeholder="Enter comprehensive tour description, itinerary highlights, and detailed information..."
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -112,6 +115,12 @@ export default function TourEditor({ tourId }: TourEditorProps) {
                   <Input id="price" type="number" placeholder="1200" />
                 </div>
               </div>
+
+              {/* Destinations Multi-Select */}
+              <DestinationsMultiSelect tourId={tourId || "new"} />
+
+              {/* Route Points Map */}
+              <MapEditor tourId={tourId || "new"} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-2">
@@ -159,7 +168,7 @@ export default function TourEditor({ tourId }: TourEditorProps) {
         </TabsContent>
 
         <TabsContent value="images">
-          <ImageUploader tourId={tourId || "new"} />
+          <SlideshowManager tourId={tourId || "new"} />
         </TabsContent>
 
         <TabsContent value="itinerary">
