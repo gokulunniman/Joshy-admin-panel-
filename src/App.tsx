@@ -15,6 +15,10 @@ import AdminToursNew from "./pages/admin/ToursNew";
 import AdminToursEdit from "./pages/admin/ToursEdit";
 import AdminInquiries from "./pages/admin/Inquiries";
 import AdminInquiryDetail from "./pages/admin/InquiryDetailPage";
+import AdminSettings from "./pages/admin/Settings";
+import AdminUsers from "./pages/admin/Users";
+import AdminUsersNew from "./pages/admin/UsersNew";
+import AdminUsersEdit from "./pages/admin/UsersEdit";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +40,10 @@ const App = () => (
           <Route path="/admin/tours/:id" element={<AdminToursEdit />} />
           <Route path="/admin/inquiries" element={<AdminInquiries />} />
           <Route path="/admin/inquiries/:type/:id" element={<AdminInquiryDetail />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/users/new" element={<AdminUsersNew />} />
+          <Route path="/admin/users/:id" element={<AdminUsersEdit />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
