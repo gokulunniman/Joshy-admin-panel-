@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/admin/AdminLayout";
 import HomepageSectionsList from "@/components/admin/HomepageSectionsList";
+import ExportButton from "@/components/admin/ExportButton";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
@@ -15,12 +16,15 @@ export default function AdminHomepage() {
               Manage homepage sections and content
             </p>
           </div>
-          <Button asChild className="bg-indigo-600 hover:bg-indigo-700 text-white">
-            <Link to="/admin/homepage/new">
-              <Plus className="h-4 w-4 mr-2" />
-              Create New Section
-            </Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <ExportButton entity="homepage-inquiries" />
+            <Button asChild className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              <Link to="/admin/homepage/new">
+                <Plus className="h-4 w-4 mr-2" />
+                Create New Section
+              </Link>
+            </Button>
+          </div>
         </div>
 
         <HomepageSectionsList />

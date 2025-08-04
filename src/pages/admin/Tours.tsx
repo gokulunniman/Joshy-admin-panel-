@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/admin/AdminLayout";
 import ToursTable from "@/components/admin/ToursTable";
+import ExportButton from "@/components/admin/ExportButton";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -14,9 +15,12 @@ export default function Tours() {
             {/* TODO: Replace with real count from API */}
             <p className="text-sm text-muted-foreground">Total tours: 12</p>
           </div>
-          <Button asChild>
-            <Link to="/admin/tours/new">Create New Tour</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <ExportButton entity="tours" />
+            <Button asChild>
+              <Link to="/admin/tours/new">Create New Tour</Link>
+            </Button>
+          </div>
         </div>
         
         <ToursTable />
