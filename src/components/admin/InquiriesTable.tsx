@@ -26,7 +26,10 @@ const getPlaceholderData = (type: string) => {
           email: "john.smith@email.com",
           date: "2024-01-20T10:30:00Z",
           status: "new",
-          subject: "General inquiry about services"
+          subject: "General inquiry about services",
+          number_of_persons: 4,
+          number_of_kids_and_age: "2 kids (ages 5 and 8)",
+          hotel_category: "4★"
         },
         {
           id: "2",
@@ -34,7 +37,10 @@ const getPlaceholderData = (type: string) => {
           email: "sarah.j@email.com", 
           date: "2024-01-19T14:45:00Z",
           status: "in_progress",
-          subject: "Questions about tour packages"
+          subject: "Questions about tour packages",
+          number_of_persons: 2,
+          number_of_kids_and_age: "No kids",
+          hotel_category: "5★"
         },
         {
           id: "3",
@@ -42,7 +48,10 @@ const getPlaceholderData = (type: string) => {
           email: "mike.wilson@email.com",
           date: "2024-01-18T09:15:00Z",
           status: "resolved",
-          subject: "Feedback on recent tour"
+          subject: "Feedback on recent tour",
+          number_of_persons: 6,
+          number_of_kids_and_age: "3 kids (ages 4, 7, 10)",
+          hotel_category: "3★"
         }
       ];
     case 'tour':
@@ -54,7 +63,10 @@ const getPlaceholderData = (type: string) => {
           date: "2024-01-20T11:00:00Z",
           status: "quoted",
           tour_title: "Kerala Backwaters Adventure",
-          preferred_dates: "March 15-22, 2024"
+          preferred_dates: "March 15-22, 2024",
+          number_of_persons: 2,
+          number_of_kids_and_age: "1 kid (age 6)",
+          hotel_category: "3★"
         },
         {
           id: "2",
@@ -63,7 +75,10 @@ const getPlaceholderData = (type: string) => {
           date: "2024-01-19T16:30:00Z",
           status: "new",
           tour_title: "Himalayan Trek Experience",
-          preferred_dates: "April 10-20, 2024"
+          preferred_dates: "April 10-20, 2024",
+          number_of_persons: 4,
+          number_of_kids_and_age: "No kids",
+          hotel_category: "4★"
         },
         {
           id: "3",
@@ -72,7 +87,10 @@ const getPlaceholderData = (type: string) => {
           date: "2024-01-18T13:20:00Z",
           status: "booked",
           tour_title: "Goa Beach Paradise",
-          preferred_dates: "February 28 - March 5, 2024"
+          preferred_dates: "February 28 - March 5, 2024",
+          number_of_persons: 3,
+          number_of_kids_and_age: "1 kid (age 12)",
+          hotel_category: "5★"
         }
       ];
     case 'homepage':

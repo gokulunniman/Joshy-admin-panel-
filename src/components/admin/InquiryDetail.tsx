@@ -24,6 +24,9 @@ const getPlaceholderInquiry = (type: string, id: string) => {
         subject: "General inquiry about services",
         message: "Hi, I'm interested in learning more about your tour packages. Could you please send me more information about your upcoming trips to Kerala?",
         phone: "+1 (555) 123-4567",
+        number_of_persons: 4,
+        number_of_kids_and_age: "2 kids (ages 5 and 8)",
+        hotel_category: "4★",
         date: "2024-01-20T10:30:00Z",
         status: "new",
         admin_notes: ""
@@ -35,7 +38,9 @@ const getPlaceholderInquiry = (type: string, id: string) => {
         email: "emma.davis@email.com",
         tour_title: "Kerala Backwaters Adventure",
         preferred_dates: "March 15-22, 2024",
-        num_travelers: 2,
+        number_of_persons: 2,
+        number_of_kids_and_age: "1 kid (age 6)",
+        hotel_category: "3★",
         special_requests: "We would like vegetarian meals and prefer AC accommodation.",
         budget_range: "$2000-2500",
         phone: "+1 (555) 987-6543",
@@ -114,6 +119,23 @@ export default function InquiryDetail({ inquiryId, inquiryType }: InquiryDetailP
               />
             </div>
             
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="number-of-persons">Number of Persons</Label>
+                <Input id="number-of-persons" type="number" value={inquiry.number_of_persons} readOnly />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="number-of-kids">Kids & Age</Label>
+                <Input id="number-of-kids" value={inquiry.number_of_kids_and_age || "No kids"} readOnly />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="hotel-category">Hotel Category</Label>
+                <Input id="hotel-category" value={inquiry.hotel_category} readOnly />
+              </div>
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
               <Input id="phone" value={inquiry.phone} readOnly />
@@ -136,8 +158,20 @@ export default function InquiryDetail({ inquiryId, inquiryType }: InquiryDetailP
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="num-travelers">Number of Travelers</Label>
-                <Input id="num-travelers" value={inquiry.num_travelers} readOnly />
+                <Label htmlFor="number-of-persons-tour">Number of Persons</Label>
+                <Input id="number-of-persons-tour" type="number" value={inquiry.number_of_persons} readOnly />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="number-of-kids-tour">Kids & Age</Label>
+                <Input id="number-of-kids-tour" value={inquiry.number_of_kids_and_age || "No kids"} readOnly />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="hotel-category-tour">Hotel Category</Label>
+                <Input id="hotel-category-tour" value={inquiry.hotel_category} readOnly />
               </div>
             </div>
             

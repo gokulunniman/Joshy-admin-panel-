@@ -28,18 +28,13 @@ export default function DestinationsMultiSelect({
   
   const [selectedDestinations, setSelectedDestinations] = useState<string[]>(value);
   
-  // Placeholder destinations - TODO: Replace with API data
+  // TODO: Replace with API data - Aligned to PRD §2.1 Navigation categories
   const destinations: Destination[] = [
-    { id: "delhi", name: "Delhi", state: "Delhi", country: "India" },
-    { id: "agra", name: "Agra", state: "Uttar Pradesh", country: "India" },
-    { id: "jaipur", name: "Jaipur", state: "Rajasthan", country: "India" },
-    { id: "goa", name: "Goa", state: "Goa", country: "India" },
-    { id: "mumbai", name: "Mumbai", state: "Maharashtra", country: "India" },
-    { id: "kerala", name: "Kerala", state: "Kerala", country: "India" },
-    { id: "himachal", name: "Himachal Pradesh", state: "Himachal Pradesh", country: "India" },
-    { id: "rajasthan", name: "Rajasthan", state: "Rajasthan", country: "India" },
-    { id: "kashmir", name: "Kashmir", state: "Jammu & Kashmir", country: "India" },
-    { id: "ladakh", name: "Ladakh", state: "Ladakh", country: "India" },
+    { id: "kerala", name: "Kerala Tours", state: "Kerala", country: "India" },
+    { id: "discover-india", name: "Discover India", state: "Multi-State", country: "India" },
+    { id: "ayurveda", name: "Ayurveda Tours", state: "Kerala", country: "India" },
+    { id: "heritage", name: "Heritage Tours", state: "Multi-State", country: "India" },
+    { id: "global", name: "Global Holidays", state: "International", country: "Various" },
   ];
 
   const handleSelectDestination = (destinationId: string) => {
