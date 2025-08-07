@@ -1,5 +1,5 @@
-import { ReactNode, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { ReactNode, useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   LayoutDashboard, 
@@ -12,6 +12,8 @@ import {
   Menu,
   X
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -52,13 +54,39 @@ const navigationItems = [
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isAdmin, loading, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // TODO: Implement Supabase session check to guard admin routes
-  const handleLogout = () => {
-    // TODO: Implement Supabase Auth signOut() here
-    console.log("Logout clicked");
+  // Redirect non-admin users
+  useEffect(() => {
+    if (!loading && (!user || !isAdmin)) {
+      navigate("/admin/login", { replace: true });
+    }
+  }, [user, isAdmin, loading, navigate]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast.success("Successfully signed out");
+      navigate("/admin/login", { replace: true });
+    } catch (error) {
+      toast.error("Failed to sign out");
+      console.error("Logout error:", error);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
+    return null; // Will redirect via useEffect
+  }
 
   const isActiveRoute = (href: string) => {
     return location.pathname === href;
@@ -148,7 +176,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               {navigationItems.find(item => isActiveRoute(item.href))?.name || "Admin Panel"}
             </h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-600">
+              Welcome, {user?.email}
+            </span>
             <Link 
               to="/" 
               target="_blank" 
